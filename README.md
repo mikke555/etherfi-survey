@@ -1,6 +1,8 @@
 # ETHERFI Season 3 Survey
 Set ETHERFI network preference for the upcoming claim
 
+https://claim.ether.fi/season-3
+
 ## Installation
 ```
 python -m venv .venv
