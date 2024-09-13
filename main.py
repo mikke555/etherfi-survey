@@ -13,7 +13,7 @@ from tqdm import tqdm
 choice = "base"  # base | arbitrum
 use_proxy = True  # True | False
 shuffle_keys = True  # True | False
-delay_between_wallet = [20, 40]
+delay_between_wallets = [20, 40]
 
 message = f"My choice is: {choice.title()}"
 base_url = "https://claim.ether.fi/api/s3-preference"
@@ -39,7 +39,7 @@ def load_private_keys(path):
 
 def load_proxies(path):
     with open(path) as file:
-        return [f"http://{line.strip()}" for line in file if line.strip()]
+        return [f"http://{row.strip()}" for row in file]
 
 
 def sleep(from_sleep, to_sleep):
@@ -61,7 +61,7 @@ def check_ip(proxy, label):
         logger.info(f"{label} Current IP: {ip}")
 
     except Exception as error:
-        logger.error(f"{label} Failed to get IP: {error} \n")
+        logger.error(f"{label} Failed to get IP: {error}")
 
 
 def generate_headers():
@@ -88,7 +88,6 @@ def check_preference(url, address, proxy, label):
             )
             return data["selection"]
         else:
-
             logger.info(f"{label} Preference is not set...")
             time.sleep(random.randint(5, 15))
             return False
@@ -151,7 +150,7 @@ if __name__ == "__main__":
             set_preference(base_url, address, choice, signature, proxy, label)
 
             if index < total_keys:
-                sleep(*delay_between_wallet)
+                sleep(*delay_between_wallets)
 
     except KeyboardInterrupt:
         logger.warning("Script interrupted by user")
